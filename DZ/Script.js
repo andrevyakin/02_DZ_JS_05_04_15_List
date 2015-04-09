@@ -28,14 +28,52 @@ for (var i = 1; i < 11; i++) {
 }
 
 var timer;
+var count = 0;
+var color;
 
+function GetRandom (num)
+{
+    return Math.round(num*Math.random());
+}
 
+function GetRandomColor()
+{
+    var red = GetRandom (255);
+    var green = GetRandom (255);
+    var blue = GetRandom (255);
+    var color = "rgb("+red+","+green+","+blue+")";
+    return color;
+}
+
+function Show()
+{
+    myStr[count].style.background = GetRandomColor();
+
+    if (count)
+        myStr[count - 1].style.background = "green";
+    else
+        myStr[9].style.background = "green";
+
+    count++;
+    if (count == 10)
+        count = 0;
+}
 
 function Clock ()
 {
-   timer = window.setInterval('Show()', 2000) ;
+   if (!timer) {
+       timer = window.setInterval('Show()', 500);
+       button.firstChild.nodeValue = "Остановить";
+       }
+    else
+   {
+       button.firstChild.nodeValue = "Запустить";
+       Stop();
+   }
 }
 
-
-
-document.write("Проверка")
+function Stop ()
+{
+    window.clearInterval(timer);
+    timer = null;
+}
